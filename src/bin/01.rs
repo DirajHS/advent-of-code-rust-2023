@@ -1,13 +1,28 @@
 use std::collections::HashMap;
-use std::usize;advent_of_code::solution!(1);
+use std::usize;
+
+advent_of_code::solution!(1);
 
 pub fn part_one(input: &str) -> Option<usize> {
     let mut total_calibration: usize = 0;
     for line in input.lines() {
-        let extracted_digits = line.chars().filter(|ch| ch.is_ascii_digit())
+        let extracted_digits = line
+            .chars()
+            .filter(|ch| ch.is_ascii_digit())
             .collect::<String>();
-        let calibration = ((extracted_digits.chars().next().unwrap().to_digit(10).unwrap() * 10) +
-            extracted_digits.chars().last().unwrap().to_digit(10).unwrap()) as usize;
+        let calibration = ((extracted_digits
+            .chars()
+            .next()
+            .unwrap()
+            .to_digit(10)
+            .unwrap()
+            * 10)
+            + extracted_digits
+                .chars()
+                .last()
+                .unwrap()
+                .to_digit(10)
+                .unwrap()) as usize;
         total_calibration += calibration;
     }
     Some(total_calibration)
@@ -15,7 +30,9 @@ pub fn part_one(input: &str) -> Option<usize> {
 
 pub fn part_two(input: &str) -> Option<usize> {
     let mut total_calibrations = 0;
-    let numbers_text: Vec<&str> = vec!["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
+    let numbers_text: Vec<&str> = vec![
+        "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
+    ];
     let numbers_val: HashMap<&str, usize> = HashMap::from([
         ("one", 1),
         ("two", 2),
@@ -26,7 +43,6 @@ pub fn part_two(input: &str) -> Option<usize> {
         ("seven", 7),
         ("eight", 8),
         ("nine", 9),
-
     ]);
     for line in input.lines() {
         let mut first_digit: usize = 0;
@@ -53,7 +69,9 @@ pub fn part_two(input: &str) -> Option<usize> {
             } else {
                 for number in numbers_text.iter().enumerate() {
                     let reversed = number.1.chars().rev().collect::<String>();
-                    if line.chars().rev().collect::<String>()[idx..line.len()].starts_with(&reversed) {
+                    if line.chars().rev().collect::<String>()[idx..line.len()]
+                        .starts_with(&reversed)
+                    {
                         last_digit = numbers_val[number.1];
                         break 'outer;
                     }
@@ -65,7 +83,6 @@ pub fn part_two(input: &str) -> Option<usize> {
     }
     Some(total_calibrations)
 }
-
 
 #[cfg(test)]
 mod tests {
