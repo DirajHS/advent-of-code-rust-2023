@@ -11,15 +11,6 @@ struct ParsedCard {
     current_numbers: Vec<u32>,
 }
 
-impl ParsedCard {
-    fn count_wins(&self) -> usize {
-        self.current_numbers
-            .iter()
-            .filter(|x| self.winning_numbers.contains(x))
-            .count()
-    }
-}
-
 impl FromStr for ParsedCard {
     type Err = &'static str;
 
@@ -73,7 +64,7 @@ pub fn part_one(input: &str) -> Option<u32> {
                     .cloned()
                     .collect();
                 points += if winning_numbers.len() == 1 {
-                    current_card_point = 1;
+                    //current_card_point = 1;
                     1
                 } else if !winning_numbers.is_empty() {
                     for number in 0..winning_numbers.len() {

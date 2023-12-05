@@ -1,20 +1,22 @@
 use std::cmp::max;
 use std::collections::HashMap;
+
 use regex::Regex;
+
 advent_of_code::solution!(2);
 
 #[derive(Debug)]
 struct Game {
     id: usize,
     //(R, G, B)
-    cubes_drawn: Vec<(usize, usize, usize)>
+    cubes_drawn: Vec<(usize, usize, usize)>,
 }
 
 impl Game {
     fn new_game(id: usize) -> Game {
         Game {
             id,
-            cubes_drawn: Vec::new()
+            cubes_drawn: Vec::new(),
         }
     }
     fn insert_subset(&mut self, red: usize, blue: usize, green: usize) {
@@ -29,10 +31,13 @@ pub fn part_one(input: &str) -> Option<usize> {
         let game = parse_line(line);
         let mut is_game_valid = true;
         for game_subset in game.cubes_drawn {
-             if game_subset.0.gt(&max_allowed.0) || game_subset.1.gt(&max_allowed.1) || game_subset.2.gt(&max_allowed.2) {
-                 is_game_valid = false;
-                 break;
-             }
+            if game_subset.0.gt(&max_allowed.0)
+                || game_subset.1.gt(&max_allowed.1)
+                || game_subset.2.gt(&max_allowed.2)
+            {
+                is_game_valid = false;
+                break;
+            }
         }
         if is_game_valid {
             sum += game.id;
@@ -54,15 +59,28 @@ pub fn part_two(input: &str) -> Option<usize> {
             min_green_cubes = max(min_green_cubes, game_subset.1);
             min_blue_cubes = max(min_blue_cubes, game_subset.2);
         }
-        sum += min_red_cubes*min_green_cubes*min_blue_cubes;
+        sum += min_red_cubes * min_green_cubes * min_blue_cubes;
         //println!("min red: {}, green: {}, blue: {}, power: {}", min_red_cubes, min_green_cubes, min_blue_cubes, min_red_cubes*min_green_cubes*min_blue_cubes);
     }
     Some(sum)
 }
 
 fn parse_line(line: &str) -> Game {
-    let game_id: &str = line.trim().split(':').next().unwrap().split(' ' ).last().unwrap();
-    let cubes = line.trim_start().split(':').last().unwrap().split(';').collect::<Vec<&str>>();
+    let game_id: &str = line
+        .trim()
+        .split(':')
+        .next()
+        .unwrap()
+        .split(' ')
+        .last()
+        .unwrap();
+    let cubes = line
+        .trim_start()
+        .split(':')
+        .last()
+        .unwrap()
+        .split(';')
+        .collect::<Vec<&str>>();
     //println!("game: {}", game_id);
     let re = Regex::new(r"(\d+) (red|green|blue)").unwrap();
 
@@ -95,7 +113,6 @@ fn parse_line(line: &str) -> Game {
     }
     //println!("game: {:?}", game);
     game
-
 }
 #[cfg(test)]
 mod tests {

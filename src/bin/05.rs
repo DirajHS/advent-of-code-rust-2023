@@ -82,11 +82,7 @@ fn parse_input(
     )
 }
 
-fn get_category_dst(
-    category_src: &isize,
-    mapping: &[(isize, isize, isize)],
-    category_dst_str: &str,
-) -> isize {
+fn get_category_dst(category_src: &isize, mapping: &[(isize, isize, isize)]) -> isize {
     let mut category_dst: isize = -1;
     for ss_mapping in mapping.iter() {
         if ss_mapping.1 <= *category_src && ss_mapping.1 + ss_mapping.2 >= *category_src {
@@ -128,6 +124,7 @@ pub fn part_one(input: &str) -> Option<u32> {
     Some(*locations.iter().min().unwrap() as u32)
 }
 
+#[allow(clippy::too_many_arguments)]
 fn get_min_location(
     seeds: Vec<isize>,
     seed_to_soil: &SeedSoilMapping,
@@ -141,13 +138,13 @@ fn get_min_location(
 ) {
     for seed in seeds.iter() {
         //print!("seed: {} ", *seed);
-        let soil = get_category_dst(seed, seed_to_soil, "soil");
-        let fertlizer = get_category_dst(&soil, soil_to_fertilizer, "fertilizer");
-        let water = get_category_dst(&fertlizer, fertilizer_to_water, "water");
-        let light = get_category_dst(&water, water_to_light, "light");
-        let temp = get_category_dst(&light, light_to_temp, "temp");
-        let humidity = get_category_dst(&temp, temp_to_humidity, "humidity");
-        let location = get_category_dst(&humidity, humidity_to_location, "location");
+        let soil = get_category_dst(seed, seed_to_soil);
+        let fertlizer = get_category_dst(&soil, soil_to_fertilizer);
+        let water = get_category_dst(&fertlizer, fertilizer_to_water);
+        let light = get_category_dst(&water, water_to_light);
+        let temp = get_category_dst(&light, light_to_temp);
+        let humidity = get_category_dst(&temp, temp_to_humidity);
+        let location = get_category_dst(&humidity, humidity_to_location);
         locations.push(location);
         //println!()
     }
