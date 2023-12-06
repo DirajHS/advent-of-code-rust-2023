@@ -15,7 +15,7 @@ fn get_race_data(input: &str) -> Vec<(usize, usize)> {
         .split_whitespace()
         .skip(1)
         .map(|s| s.parse().unwrap());
-    let race_data: Vec<(usize, usize)> = times.into_iter().zip(distances.into_iter()).collect();
+    let race_data: Vec<(usize, usize)> = times.into_iter().zip(distances).collect();
     race_data
 }
 
