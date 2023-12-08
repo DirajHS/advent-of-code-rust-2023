@@ -115,7 +115,6 @@ fn cmp_hands(a: &Hand, b: &Hand, cards_ordering: &str) -> Ordering {
 fn parse_input(input: &str, ranking_fn: fn(Vec<char>) -> Rank) -> Vec<Hands> {
     let hands: Vec<Hands> = input
         .lines()
-        .into_iter()
         .map(|line| {
             let parts: Vec<&str> = line.split_whitespace().collect();
             let cards: Vec<char> = parts[0].chars().collect();
